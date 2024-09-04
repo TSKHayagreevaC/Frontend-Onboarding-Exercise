@@ -50,7 +50,7 @@ const Details:FC = (listItem) => {
     
     console.log("item :: ", item);
 
-    const itemDetails = JSON.parse(`${localStorage.getItem(`${head.toLowerCase()}s`)}`).find((ele:any) => ele.id === params.id);
+    const itemDetails = JSON.parse(`${localStorage.getItem(`${head.toLowerCase()}s`)}`)?.find((ele:any) => ele.id === params.id);
 
     console.log("itemDetails :: details.tsx :: ", itemDetails)
     

@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material"
+import { Button, Grid, IconButton, Stack, TextField } from "@mui/material"
 
 import { useForm } from "react-hook-form"
 
@@ -7,6 +7,8 @@ import type { ListItem } from "../views/details"
 import { useNavigate, useParams } from "react-router-dom";
 
 import { faker } from "@faker-js/faker";
+
+import { useState } from "react";
 
 
 export default function HookForm(item: any) {
@@ -20,18 +22,21 @@ export default function HookForm(item: any) {
 		formState: { errors },
 	
 	} = useForm<ListItem>();
+
 	
 	const navigate = useNavigate();
-
+	
 	let itemDetails: ListItem;
-
+	
 	let isDuplicate: boolean;
-
+	
 	const params = useParams();
+	
+	const [editForm, setEditForm] = useState(params?.id !== 'new');
 
 	const existingList = localStorage.getItem(`${item.item}s`.toLowerCase());
 
-	itemDetails = JSON.parse(`${existingList}`).find((ele: any) => ele.id === params.id);
+	itemDetails = JSON.parse(`${existingList}`)?.find((ele: any) => ele.id === params.id);
 
 	isDuplicate = itemDetails?.name?.length === 0;
 
@@ -51,7 +56,7 @@ export default function HookForm(item: any) {
 
 				itemDetails = JSON.parse(existingList).find((ele: any) => ele.name === data.name);
 
-				isDuplicate = itemDetails?.name?.length === 0;
+				isDuplicate = itemDetails?.id === data?.id;
 
 				console.log("isDuplicate :: ", isDuplicate);
 
@@ -83,10 +88,6 @@ export default function HookForm(item: any) {
     
 	);
 
-	const readOnly = params?.id !== 'new';
-
-	console.log("params , readOnly ", params?.id, readOnly);
-
 	console.log("itemDetails :: hook-form.tsx :: ", itemDetails);
 
 	return (
@@ -101,7 +102,7 @@ export default function HookForm(item: any) {
 
 						defaultValue={itemDetails?.name}
 					
-						disabled={readOnly} 
+						disabled={editForm} 
 						
 						fullWidth={true} 
 						
@@ -121,7 +122,7 @@ export default function HookForm(item: any) {
 
 						defaultValue={itemDetails?.model}
 
-						disabled={readOnly} 
+						disabled={editForm} 
 						
 						fullWidth={true} 
 						
@@ -141,7 +142,7 @@ export default function HookForm(item: any) {
 
 						defaultValue={itemDetails?.brand}
 					
-						disabled={readOnly} 
+						disabled={editForm} 
 						
 						fullWidth={true} 
 						
@@ -159,9 +160,13 @@ export default function HookForm(item: any) {
 		
 					<TextField 
 
-						defaultValue={itemDetails?.yearOfRelease}
+						type="number"
+
+						InputProps={{ inputProps: { min: "2000", max: "2024", step: "1" } }}
+
+						defaultValue={editForm ? itemDetails?.yearOfRelease : 2000}
 					
-						disabled={readOnly} 
+						disabled={editForm} 
 						
 						fullWidth={true} 
 						
@@ -181,7 +186,7 @@ export default function HookForm(item: any) {
 
 						defaultValue={itemDetails?.color}
 					
-						disabled={readOnly} 
+						disabled={editForm} 
 						
 						fullWidth={true} 
 						
@@ -197,23 +202,96 @@ export default function HookForm(item: any) {
 		
 			</Grid>
 		
-			<Button
+			{
+			
+				params?.id === 'new' ? (
 
-				disabled={readOnly}
-		
-				sx={{m:2}}
+					<Button
+
+						disabled={editForm}
 				
-				variant="contained"
+						sx={{m:2}}
+						
+						variant="contained"
+						
+						type="submit"
+						
+						size="small"
 				
-				type="submit"
+					>
+						
+						Submit
 				
-				size="small"
-		
-			>
-				
-				Submit
-		
-			</Button>
+					</Button>
+
+				) : (
+
+					<Stack direction="row" spacing={2} m={2} mt={4}>
+						
+						{!editForm ? (
+
+							<Button
+						
+								sx={{m:2}}
+								
+								variant="outlined"
+								
+								size="small"
+
+								color="error"
+
+								onClick={() => setEditForm(true)}
+						
+							>
+								
+								Cancel
+						
+							</Button>
+
+						) : (
+
+							<Button
+						
+								sx={{m:2}}
+								
+								variant="contained"
+								
+								size="small"
+
+								onClick={() => setEditForm(false)}
+						
+							>
+								
+								Edit
+						
+							</Button>
+
+						)}
+
+						<Button
+
+							disabled={editForm}
+					
+							sx={{m:2}}
+							
+							variant="contained"
+							
+							type="submit"
+							
+							size="small"
+					
+						>
+							
+							Submit
+					
+						</Button>
+
+					
+					</Stack>
+
+				)
+			
+			}
 		
 		</form>
 	)
