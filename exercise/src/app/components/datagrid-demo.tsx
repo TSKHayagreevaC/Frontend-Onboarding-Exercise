@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 
 const columns: GridColDef<(typeof rows)[number]>[] = [
 
-    { field: 'name', headerName: 'Name', width: 150, editable: true },
+    // { field: 'name', headerName: 'Name', width: 150, editable: true },
   
     { field: 'model', headerName: 'Model', width: 150, editable: true },
   

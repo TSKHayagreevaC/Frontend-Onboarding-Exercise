@@ -31,7 +31,7 @@ export default function HookForm(item: any) {
 
 	const existingList = localStorage.getItem(`${item.item}s`.toLowerCase());
 
-	itemDetails = JSON.parse(`${existingList}`).find((ele: any) => ele.name === params.id);
+	itemDetails = JSON.parse(`${existingList}`).find((ele: any) => ele.id === params.id);
 
 	isDuplicate = itemDetails?.name?.length === 0;
 
@@ -85,7 +85,9 @@ export default function HookForm(item: any) {
 
 	const readOnly = params?.id !== 'new';
 
-	console.log("params , readOnly ", params?.id, readOnly)
+	console.log("params , readOnly ", params?.id, readOnly);
+
+	console.log("itemDetails :: hook-form.tsx :: ", itemDetails);
 
 	return (
 
@@ -95,37 +97,109 @@ export default function HookForm(item: any) {
 		
 				<Grid m={2}>
 		
-					<TextField disabled={readOnly} fullWidth={true} {...register("name")} variant="standard" label="Name" />
+					<TextField 
+
+						defaultValue={itemDetails?.name}
+					
+						disabled={readOnly} 
+						
+						fullWidth={true} 
+						
+						{...register("name")} 
+						
+						variant="standard" 
+						
+						label="Name" 
+						
+					/>
 		
 				</Grid>
 		
 				<Grid m={2}>
 		
-					<TextField disabled={readOnly} fullWidth={true} {...register("model")} variant="standard" label="Model" />
+					<TextField 
+
+						defaultValue={itemDetails?.model}
+
+						disabled={readOnly} 
+						
+						fullWidth={true} 
+						
+						{...register("model")} 
+						
+						variant="standard" 
+						
+						label="Model" 
+						
+					/>
 		
 				</Grid>
 		
 				<Grid m={2}>
 		
-					<TextField disabled={readOnly} fullWidth={true} {...register("brand")} variant="standard" label="Brand" />
+					<TextField 
+
+						defaultValue={itemDetails?.brand}
+					
+						disabled={readOnly} 
+						
+						fullWidth={true} 
+						
+						{...register("brand")} 
+						
+						variant="standard" 
+						
+						label="Brand" 
+						
+					/>
 		
 				</Grid>
 		
 				<Grid m={2}>
 		
-					<TextField disabled={readOnly} fullWidth={true} {...register("yearOfRelease")} variant="standard" label="Year Of Release" />
+					<TextField 
+
+						defaultValue={itemDetails?.yearOfRelease}
+					
+						disabled={readOnly} 
+						
+						fullWidth={true} 
+						
+						{...register("yearOfRelease")} 
+						
+						variant="standard" 
+						
+						label="Year Of Release" 
+						
+					/>
 		
 				</Grid>
 		
 				<Grid m={2}>
 		
-					<TextField disabled={readOnly} fullWidth={true} {...register("color")} variant="standard" label="Color" />
+					<TextField 
+
+						defaultValue={itemDetails?.color}
+					
+						disabled={readOnly} 
+						
+						fullWidth={true} 
+						
+						{...register("color")} 
+						
+						variant="standard" 
+						
+						label="Color" 
+						
+					/>
 		
 				</Grid>
 		
 			</Grid>
 		
 			<Button
+
+				disabled={readOnly}
 		
 				sx={{m:2}}
 				
