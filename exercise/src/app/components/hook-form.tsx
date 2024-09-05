@@ -78,7 +78,7 @@ export default function HookForm(item: any) {
 					
 					};
 
-					updateData.id = itemDetails.id;
+					updateData.id = itemDetails?.id?.length ? itemDetails.id : faker.string.uuid();
 					
 					updateData.name = data?.name?.length ? data.name : itemDetails?.name;
 					
@@ -91,8 +91,10 @@ export default function HookForm(item: any) {
 					updateData.color = data?.color?.length ? data.color : itemDetails?.color;
 
 					console.log("updateData", updateData);
+
+					const newList = JSON.parse(existingList).filter((ele: ListItem) => ele.id !== updateData.id);
 					
-					localStorage.setItem(`${item.item}s`.toLowerCase(), JSON.stringify([...JSON.parse(existingList), {...updateData}]));
+					localStorage.setItem(`${item.item}s`.toLowerCase(), JSON.stringify([ ...newList, {...updateData}]));
 
 					navigate(`/${item.item}s`.toLowerCase());
 					
