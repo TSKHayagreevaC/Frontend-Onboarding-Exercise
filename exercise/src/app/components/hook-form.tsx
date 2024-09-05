@@ -54,10 +54,6 @@ export default function HookForm(item: any) {
 
 			if (existingList?.length) {
 
-				itemDetails = JSON.parse(existingList).find((ele: any) => ele.name === data.name);
-
-				isDuplicate = itemDetails?.id === data?.id;
-
 				console.log("isDuplicate :: ", isDuplicate);
 
 				if (isDuplicate) {
@@ -65,8 +61,38 @@ export default function HookForm(item: any) {
 					alert(`${data.name} already submitted`);
 					
 				} else {
+
+					let updateData: ListItem = {
+						
+						id: "",
+						
+						name: "",
+						
+						model: "",
+						
+						brand: "",
+						
+						yearOfRelease: 2000,
+						
+						color: ""
 					
-					localStorage.setItem(`${item.item}s`.toLowerCase(), JSON.stringify([...JSON.parse(existingList), {...data, id: faker.string.uuid()}]));
+					};
+
+					updateData.id = itemDetails.id;
+					
+					updateData.name = data?.name?.length ? data.name : itemDetails?.name;
+					
+					updateData.model = data?.model?.length ? data.model : itemDetails?.model;
+					
+					updateData.brand = data?.brand?.length ? data.brand : itemDetails?.brand;
+					
+					updateData.yearOfRelease = data?.yearOfRelease >= 2000 ? data.yearOfRelease : itemDetails?.yearOfRelease;
+					
+					updateData.color = data?.color?.length ? data.color : itemDetails?.color;
+
+					console.log("updateData", updateData);
+					
+					localStorage.setItem(`${item.item}s`.toLowerCase(), JSON.stringify([...JSON.parse(existingList), {...updateData}]));
 
 					navigate(`/${item.item}s`.toLowerCase());
 					

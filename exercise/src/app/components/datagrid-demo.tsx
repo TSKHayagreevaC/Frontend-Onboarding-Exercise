@@ -61,7 +61,7 @@ export default function DataGridDemo({title, data}: {title:String | undefined, d
                         
                         headerName: 'ID', 
                         
-                        width: 200, 
+                        width: 350, 
                         
                         renderCell: (
                             
@@ -69,9 +69,7 @@ export default function DataGridDemo({title, data}: {title:String | undefined, d
                 
                                 return (
                                 
-                                    <Button component="a" href={`/${title}/${params.value}`}
-                
-                                    >
+                                    <Button component="a" href={`/${title}/${params.value}`}>
                                         
                                         {params.value}
                                         
