@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, Stack, TextField } from "@mui/material"
+import { Button, Grid, IconButton, Stack, TextField, Typography } from "@mui/material"
 
 import { useForm } from "react-hook-form"
 
@@ -208,25 +208,79 @@ export default function HookForm(item: any) {
 		
 				</Grid>
 		
-				<Grid m={2}>
-		
-					<TextField 
+				{`${item?.item}` === 'Car' && 
 
-						defaultValue={itemDetails?.color}
-					
-						disabled={editForm} 
+					<Grid m={2}>
+			
+						<TextField 
+
+							defaultValue={itemDetails?.color}
 						
-						fullWidth={true} 
+							disabled={editForm} 
+							
+							fullWidth={true} 
+							
+							{...register("color")} 
+							
+							variant="standard" 
+							
+							label="Color" 
+							
+						/>
+			
+					</Grid>
+				
+				}
+
+
+				{ `${item?.item}` === 'Truck' && 
+				
+					<Grid m={2}>
+
+						<Typography color={'grey'} fontSize={15}>Permits</Typography>
 						
-						{...register("color")} 
-						
-						variant="standard" 
-						
-						label="Color" 
-						
-					/>
-		
-				</Grid>
+						<Stack direction="row" spacing={2}>
+							
+							<TextField 
+
+								// defaultValue={itemDetails?.color}
+							
+								disabled={editForm} 
+								
+								fullWidth={true} 
+								
+								// {...register("color")} 
+								
+								variant="standard" 
+								
+								label="Permit No" 
+								
+							/>
+
+							<TextField 
+
+								// defaultValue={itemDetails?.color}
+
+								disabled={editForm} 
+
+								fullWidth={true} 
+
+								// {...register("color")} 
+
+								variant="standard" 
+
+								label="State" 
+
+							/>
+				
+						</Stack>
+
+					</Grid>
+
+				}
+
+
+
 		
 			</Grid>
 		

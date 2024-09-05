@@ -15,4 +15,9 @@ export interface Item {
     type: string
     Item: Item
   }
+
+  export type TruckPermits = {
+    permit_no: string;
+    state: string
+  }[]
   
